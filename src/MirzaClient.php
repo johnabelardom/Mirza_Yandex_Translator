@@ -110,7 +110,7 @@ class MirzaClient
 
         $response = json_decode(curl_exec($ch));
         curl_close($ch);
-        if (array_key_exists('text', $response)) {
+        if (! empty($response->text)) {
             return $response->text[0];
         } else {
             throw new Exception('This text could not be translated: the string you entered or the language code are maybe invalid. Run getSupportedLanguages() to get the list of supported languages.');
@@ -138,7 +138,7 @@ class MirzaClient
         $response = json_decode(curl_exec($ch));
         curl_close($ch);
 
-        if (array_key_exists('lang', $response) && $response->lang != null) {
+        if (! empty($response->lang) && $response->lang != null) {
             return $response->lang;
         } else {
             throw new Exception('Could not get the language code: the entered string may not be valid.');
@@ -166,7 +166,7 @@ class MirzaClient
 
         $response = json_decode(curl_exec($ch));
         curl_close($ch);
-        if (array_key_exists('langs', $response)) {
+        if (! empty($response->langs)) {
             return $codes ? array_keys(json_decode(json_encode($response->langs), true)) : $response->langs;
         } else {
             throw new Exception('An unknown error has occured while trying to fetch the list of supported languages.');
